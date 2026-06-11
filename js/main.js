@@ -1,5 +1,6 @@
 import { generatePhotosData } from './data.js';
+import { renderThumbnails } from './thumbnails.js';
 
 const photosData = generatePhotosData();
 
-console.log('Сгенерированные mock-данные (25 фото):', photosData);
+renderThumbnails(photosData);
