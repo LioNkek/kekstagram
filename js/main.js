@@ -1,6 +1,7 @@
 import { generatePhotosData } from './data.js';
 import { renderThumbnails } from './thumbnails.js';
 import { openLightbox } from './lightbox.js';
+import { initUploadForm } from './form.js';
 
 const photosData = generatePhotosData();
 
@@ -25,3 +26,4 @@ picturesContainer.addEventListener('click', (evt) => {
   }
 });
 
+initUploadForm();
