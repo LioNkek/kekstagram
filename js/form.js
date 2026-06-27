@@ -1,3 +1,6 @@
+import { initScale, resetScale } from './scale.js';
+import { initEffects, resetEffects } from './effects.js';
+
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadInput = uploadForm.querySelector('.img-upload__input');
 const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
@@ -69,6 +72,8 @@ const openForm = () => {
 const closeForm = () => {
   uploadForm.reset();
   pristine.reset();
+  resetScale();
+  resetEffects();
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -87,6 +92,9 @@ function onDocumentKeydown (evt) {
 }
 
 const initUploadForm = () => {
+  initScale();
+  initEffects();
+
   uploadInput.addEventListener('change', () => {
     openForm();
   });
