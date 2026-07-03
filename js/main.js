@@ -1,29 +1,33 @@
-import { generatePhotosData } from './data.js';
 import { renderThumbnails } from './thumbnails.js';
 import { openLightbox } from './lightbox.js';
 import { initUploadForm } from './form.js';
-
-const photosData = generatePhotosData();
-
-renderThumbnails(photosData);
+import { getData } from './api.js';
+import { showDataError } from './util.js';
 
 const picturesContainer = document.querySelector('.pictures');
 
-picturesContainer.addEventListener('click', (evt) => {
-  const targetThumbnail = evt.target.closest('[data-thumbnail-id]');
+getData()
+  .then((photosData) => {
+    renderThumbnails(photosData);
 
-  if (!targetThumbnail) {
-    return;
-  }
+    picturesContainer.addEventListener('click', (evt) => {
+      const targetThumbnail = evt.target.closest('[data-thumbnail-id]');
 
-  evt.preventDefault();
+      if (!targetThumbnail) {
+        return;
+      }
 
-  const thumbnailId = Number(targetThumbnail.dataset.thumbnailId);
-  const currentPicture = photosData.find((photo) => photo.id === thumbnailId);
+      evt.preventDefault();
 
-  if (currentPicture) {
-    openLightbox(currentPicture);
-  }
-});
+      const thumbnailId = Number(targetThumbnail.dataset.thumbnailId);
+      const currentPicture = photosData.find((photo) => photo.id === thumbnailId);
+
+      if (currentPicture) {
+        openLightbox(currentPicture);
+      }
+    });
+  }).catch(() => {
+    showDataError();
+  });
 
 initUploadForm();

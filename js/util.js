@@ -20,9 +20,23 @@ const createIdGenerator = () => {
   return () => ++lastGeneratedId;
 };
 
+const ERROR_SHOW_TIME = 5000;
+
+const showDataError = () => {
+  const errorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+  const errorElement = errorTemplate.cloneNode(true);
+
+  document.body.append(errorElement);
+
+  setTimeout(() => {
+    errorElement.remove();
+  }, ERROR_SHOW_TIME);
+};
+
 export {
   getRandomInteger,
   getRandomArrayElement,
   shuffleArray,
-  createIdGenerator
+  createIdGenerator,
+  showDataError
 };
