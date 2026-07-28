@@ -10,6 +10,11 @@ const commentInput = uploadForm.querySelector('.text__description');
 const hashtagsInput = uploadForm.querySelector('.text__hashtags');
 const submitButton = uploadForm.querySelector('.img-upload__submit');
 
+const previewImage = uploadForm.querySelector('.img-upload__preview img');
+
+const DEFAULT_IMAGE = 'img/upload-default-image.jpg';
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
+
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Опубликовываю...'
@@ -79,12 +84,30 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
+const loadImage = (file) => {
+  const reader = new FileReader();
+
+  reader.addEventListener('load', () => {
+    if (!uploadOverlay.classList.contains('hidden')) {
+      previewImage.src = reader.result;
+    }
+  });
+
+  reader.readAsDataURL(file);
+};
+
+const resetImage = () => {
+  previewImage.src = DEFAULT_IMAGE;
+};
+
 const closeForm = () => {
   uploadForm.reset();
   uploadInput.value = '';
   pristine.reset();
   resetScale();
   resetEffects();
+  resetImage();
+  unblockSubmitButton();
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -153,7 +176,19 @@ const initUploadForm = () => {
   initEffects();
 
   uploadInput.addEventListener('change', () => {
-    openForm();
+    const file = uploadInput.files[0];
+
+    if (file) {
+      if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+        uploadInput.value = '';
+        return;
+      }
+
+      loadImage(file);
+      resetScale();
+      resetEffects();
+      openForm();
+    }
   });
 
   closeButton.addEventListener('click', () => {
