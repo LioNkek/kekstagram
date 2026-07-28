@@ -81,6 +81,7 @@ const unblockSubmitButton = () => {
 
 const closeForm = () => {
   uploadForm.reset();
+  uploadInput.value = '';
   pristine.reset();
   resetScale();
   resetEffects();
@@ -162,7 +163,9 @@ const initUploadForm = () => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
+    pristine.reset();
     const isValid = pristine.validate();
+
     if (isValid) {
       blockSubmitButton();
 

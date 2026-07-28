@@ -79,11 +79,22 @@ const onEffectsListChange = (evt) => {
 
     updateSliderVisibility();
     updateSliderOptions();
+
+    const maxValue = chosenEffect.max;
+    effectLevelInput.value = maxValue;
+    sliderElement.noUiSlider.set(maxValue);
+
+    if (chosenEffect !== EFFECTS.none) {
+      previewImage.style.filter = `${chosenEffect.style}(${maxValue}${chosenEffect.unit})`;
+    } else {
+      previewImage.style.filter = 'none';
+    }
   }
 };
 
 const resetEffects = () => {
   chosenEffect = EFFECTS.none;
+  previewImage.style.filter = 'none';
   updateSliderVisibility();
 };
 
@@ -96,6 +107,8 @@ const initEffects = () => {
       connect: 'lower',
     });
   }
+
+  effectLevelInput.value = 100;
 
   updateSliderVisibility();
 
