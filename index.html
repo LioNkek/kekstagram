@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="vendor/nouislider/nouislider.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Кекстаграм</title>
@@ -34,7 +36,7 @@
 
             <!-- Изначальное состояние поля для загрузки изображения -->
             <fieldset class="img-upload__start">
-              <input type="file" id="upload-file" class="img-upload__input  visually-hidden" name="filename" required>
+              <input type="file" id="upload-file" class="img-upload__input  visually-hidden" name="filename" accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml" required>
               <label for="upload-file" class="img-upload__label  img-upload__control">Загрузить</label>
             </fieldset>
 
@@ -156,14 +158,6 @@
           <!-- Комментарии к изображению -->
           <div class="social__comment-count"><span class="social__comment-shown-count">5</span> из <span class="social__comment-total-count">125</span> комментариев</div>
           <ul class="social__comments">
-            <li class="social__comment">
-              <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-              <p class="social__text">Мега фото! Просто обалдеть. Как вам так удалось?</p>
-            </li>
-            <li class="social__comment">
-              <img class="social__picture" src="img/avatar-3.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-               <p class="social__text">Да это фоташоп!!!!!!!!</p>
-            </li>
           </ul>
 
           <!-- Кнопка для загрузки новой порции комментариев -->
@@ -196,6 +190,14 @@
     </div>
   </footer>
 
+  <!-- Шаблон коментария случайного пользователя -->
+  <template id="comment">
+    <li class="social__comment">
+      <img class="social__picture" src="" alt="" width="35" height="35">
+      <p class="social__text"></p>
+    </li>
+  </template>
+
   <!-- Шаблон изображения случайного пользователя -->
   <template id="picture">
     <a href="#" class="picture">
@@ -227,12 +229,17 @@
     </section>
   </template>
 
-    <!-- Сообщение с ошибкой загрузки изображений от других пользователей -->
-    <template id="data-error">
-      <section class="data-error">
-        <h2 class="data-error__title">Не удалось загрузить данные</h2>
-      </section>
-    </template>
+  <!-- Сообщение с ошибкой загрузки изображений от других пользователей -->
+  <template id="data-error">
+    <section class="data-error">
+      <h2 class="data-error__title">Не удалось загрузить данные</h2>
+    </section>
+  </template>
 
+  <script src="./vendor/pristine/pristine.min.js"></script>
+  <script src="./vendor/nouislider/nouislider.js"></script>
+  <script src="./js/filter.js" type="module"></script>
+  <script src="./js/main.js" type="module"></script>
 </body>
+
 </html>
